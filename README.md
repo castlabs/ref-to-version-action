@@ -7,6 +7,9 @@ This refers to the branch name. The special cases that are handled are
 and a "v" prefix is removed, i.e. the tag `v1.0` will return version `1.0`.
 Pull Requests refs are converted to `PR-<number>` versions.
 
+The action exposes the version as an output and as an environment variable 
+`REF_VERSION` that can be used by later steps.
+
 ## Outputs
 
 ## `version`
