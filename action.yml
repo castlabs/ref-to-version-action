@@ -1,0 +1,10 @@
+name: 'Ref to Version'
+description: 'Uses the ref to extract a version'
+
+outputs:
+  version:
+    description: >
+      The version extracted from the github ref
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
