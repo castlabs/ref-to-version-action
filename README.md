@@ -21,8 +21,7 @@ The opinionated version string
 ```
 - uses: castlabs/ref-to-version-action@v1.0
   id: refver
-- uses: actions/delete-package-versions@v2
-  if: ${{ steps.versions.outputs.ids != '' }}
-  with:
-    package-version-ids: "${{ steps.versions.outputs.ids }}"
-
+- name: Ref version variable
+  run: echo "${REF_VERSION}"
+- name: Ref version output
+  run: echo "${{ steps.refver.outputs.version }}"
