@@ -1,10 +1,29 @@
 name: 'Ref to Version'
 description: 'Uses the ref to extract a version'
 
+inputs:
+  versionFile:
+    description: >
+      Specify a path to a json file that has a top level 'version'
+      property, i.e. package.json. The value of that version will be 
+      used as a prefix for the output, using '-' as a separator
+    required: false
+  useVersionFile:
+    description: >
+      Configure if and when a version file should be considered. This takes
+      a comma separated list. The permitted values are 'branch', 'pr', 'tag'.
+    required: false
+    default: 'branch,pr'
+  versionFileSeparator:
+    description: Separator used when concatenating the ref and version file versions
+    required: false
+    default: '-'
+
 outputs:
   version:
     description: >
       The version extracted from the github ref
+
 runs:
   using: 'node16'
   main: 'dist/index.js'

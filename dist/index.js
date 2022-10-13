@@ -9612,23 +9612,53 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
+const fs = __nccwpck_require__(7147);
 
 try {
-    const ref = github.context.ref;
-    core.info(`Extract version from ${ref}`);
-    const segments = ref.split("/");
-    let version = segments[2]
-    if (version.startsWith("v")) {
-        version = version.substring(1);
+  const ref = github.context.ref
+  core.info(`Extracting version from ${ref}`)
+
+  const segments = ref.split("/")
+  const isTag = ref.startsWith("refs/tags/")
+  const isPullRequest = ref.startsWith("refs/pull/")
+  const isBranch = !isTag && !isPullRequest
+
+  let version = segments[2]
+
+  if (isTag && version.startsWith("v")) {
+    version = version.substring(1)
+  }
+
+  if (isPullRequest) {
+    version = "PR-" + version
+  }
+
+  core.info(`Extracted ref version: '${version}'`)
+  const versionFile = core.getInput('versionFile');
+  const versionFileSeparator = core.getInput('versionFileSeparator') || '-';
+  const versionFileUsageRaw = core.getInput('useVersionFile') || 'branch,pr';
+  const useVersionFileCases = versionFileUsageRaw.split(',').map(s => s.trim())
+  const useVersionFile = (isBranch && useVersionFileCases.includes('branch'))
+    || (isTag && useVersionFileCases.includes('tag'))
+    || (isPullRequest && useVersionFileCases.includes('pr'))
+
+  if (versionFile && useVersionFile) {
+    const data = fs.readFileSync(versionFile)
+    const parsedVersionFile = JSON.parse(data)
+    let versionInFile = parsedVersionFile['version'];
+    if (versionInFile) {
+      version = `${version}${versionFileSeparator}${versionInFile}`
+      core.info(`Extracted version-file version: '${versionInFile}' and created final version '${version}'`)
+    } else {
+      core.setFailed(`Parsed version file ${versionInFile} but could not find a 'version' property`);
+      return
     }
-    if (ref.startsWith("refs/pull/")) {
-        version = "PR-" + version;
-    }
-    core.info(`Extracted version: '${version}'`)
-    core.setOutput("version", version);
-    core.exportVariable("REF_VERSION", version);
-}catch (error) {
-    core.setFailed(error)
+  }
+
+  core.setOutput("version", version);
+  core.exportVariable("REF_VERSION", version);
+} catch (error) {
+  core.setFailed(error)
 }
 
 
