@@ -35,7 +35,7 @@ try {
     const parsedVersionFile = JSON.parse(data)
     let versionInFile = parsedVersionFile['version'];
     if (versionInFile) {
-      version = `${version}${versionFileSeparator}${versionInFile}`
+      version = `${versionInFile}${versionFileSeparator}${version}`
       core.info(`Extracted version-file version: '${versionInFile}' and created final version '${version}'`)
     } else {
       core.setFailed(`Parsed version file ${versionInFile} but could not find a 'version' property`);
