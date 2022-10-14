@@ -23,6 +23,12 @@ outputs:
   version:
     description: >
       The version extracted from the github ref
+  isTag:
+    description: Boolean that indicates that a tag version was created
+  isPullRequest:
+    description: Boolean that indicates that a Pull Request version was created
+  isBranch:
+    description: Boolean that indicates that a branch version was created
 
 runs:
   using: 'node16'

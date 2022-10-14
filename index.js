@@ -44,6 +44,9 @@ try {
   }
 
   core.setOutput("version", version);
+  core.setOutput("isTag", isTag);
+  core.setOutput("isPullRequest", isPullRequest);
+  core.setOutput("isBranch", isBranch);
   core.exportVariable("REF_VERSION", version);
 } catch (error) {
   core.setFailed(error)

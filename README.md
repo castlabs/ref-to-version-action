@@ -22,9 +22,12 @@ The action exposes the version as an output and as an environment variable
 
 ## Outputs
 
-| Name      | Description                    |
-|-----------|--------------------------------|
-| `version` | The opinionated version string |
+| Name            | Description                                             |
+|-----------------|---------------------------------------------------------|
+| `version`       | The opinionated version string                          |
+| `isTag`         | Boolean that is true a tag version was created          |
+| `isPullRequest` | Boolean that is true a Pull Request version was created |
+| `isBranch`      | Boolean that is true a branch version was created       |
 
 ## Example usage
 
