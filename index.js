@@ -50,6 +50,7 @@ try {
     || (isPullRequest && createRunVersionCases.includes('pr'))
   if(createRunVersion) {
     version = `${version}${versionFileSeparator}${github.context.run_number}${versionFileSeparator}${github.context.run_attempt}`
+    core.info(`Added run number and attempt to the version '${version}'`)
   }
 
 
