@@ -49,9 +49,8 @@ try {
     || (isTag && createRunVersionCases.includes('tag'))
     || (isPullRequest && createRunVersionCases.includes('pr'))
   if(createRunVersion) {
-    version = `${version}${versionFileSeparator}${github.context.run_number}${versionFileSeparator}${github.context.run_attempt}`
+    version = `${version}${versionFileSeparator}${github.context.runNumber}`
     core.info(`Added run number and attempt to the version '${version}'`)
-    core.info('>>> DEBUG ' + JSON.stringify(github, null, 2))
   }
 
 
