@@ -16,8 +16,8 @@ inputs:
     default: 'branch,pr'
   createRunVersion:
     description: >
-    Configure if and when a unique run version should be created using
-    github.run_number and github.run_attempt. The permitted values are 'branch', 'pr', 'tag'.
+      Configure if and when a unique run version should be created using
+      github.run_number and github.run_attempt. The permitted values are 'branch', 'pr', 'tag'.
     required: false
     default: 'branch,pr'
   versionFileSeparator:
