@@ -14,6 +14,12 @@ inputs:
       a comma separated list. The permitted values are 'branch', 'pr', 'tag'.
     required: false
     default: 'branch,pr'
+  createRunVersion:
+    description: >
+      Configure if and when a unique run version should be created using
+      github.run_number and github.run_attempt. The permitted values are 'branch', 'pr', 'tag'.
+    required: false
+    default: 'branch,pr'
   versionFileSeparator:
     description: Separator used when concatenating the ref and version file versions
     required: false

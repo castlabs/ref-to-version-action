@@ -9655,6 +9655,17 @@ try {
     }
   }
 
+  const createRunVersionRaw = core.getInput('createRunVersion') || 'branch,pr';
+  const createRunVersionCases = createRunVersionRaw.split(',').map(s => s.trim())
+  const createRunVersion = (isBranch && createRunVersionCases.includes('branch'))
+    || (isTag && createRunVersionCases.includes('tag'))
+    || (isPullRequest && createRunVersionCases.includes('pr'))
+  if(createRunVersion) {
+    version = `${version}${versionFileSeparator}${github.context.runNumber}`
+    core.info(`Added run number and attempt to the version '${version}'`)
+  }
+
+
   core.setOutput("version", version);
   core.setOutput("isTag", isTag);
   core.setOutput("isPullRequest", isPullRequest);
