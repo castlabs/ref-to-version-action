@@ -24,6 +24,11 @@ inputs:
     description: Separator used when concatenating the ref and version file versions
     required: false
     default: '-'
+  from-tag:
+    description: >
+      Pass a tag name and set the output version using the same logic as if it
+      would have been a ref tag.
+    required: false
 
 outputs:
   version:

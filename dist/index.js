@@ -9615,7 +9615,11 @@ const github = __nccwpck_require__(5438);
 const fs = __nccwpck_require__(7147);
 
 try {
-  const ref = github.context.ref
+  let ref = github.context.ref
+  let fromTag = core.getInput("from-tag")
+  if (fromTag) {
+    ref = `refs/tags/${fromTag}`
+  }
   core.info(`Extracting version from ${ref}`)
 
   const segments = ref.split("/")
