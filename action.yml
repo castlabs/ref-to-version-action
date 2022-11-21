@@ -29,6 +29,12 @@ inputs:
       Pass a tag name and set the output version using the same logic as if it
       would have been a ref tag.
     required: false
+  tagPrefix:
+    description: >
+      A prefix that will be removed from the beginning of the tag name
+      to compute the version name.
+    default: 'v'
+    required: false
 
 outputs:
   version:
