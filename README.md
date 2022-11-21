@@ -14,10 +14,14 @@ The action exposes the version as an output and as an environment variable
 
 ## Inputs
 
-| Name             | Description                                                                                                                                                                                               |
-|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `versionFile`    | Specify a path to a json file that has a top level 'version' property, i.e. package.json. The value of that version will be used as a prefix for the output, using `versionFileSeparator` as a separator. |
-| `useVersionFile` | Comma separated list of branch,tag, or pr that indicates in which cases the version file should be considered. Defaults to 'branch,pr'                                                                    |
+| Name                   | Description                                                                                                                                                       |
+|------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `versionFile`          | Specify a path to a json file that has a top level 'version' property, i.e. package.json. The value of that version will be used as a prefix for the output.      |
+| `useVersionFile`       | Comma separated list of branch,tag, or pr that indicates in which cases the version file should be considered. Defaults to 'branch,pr'                            |
+| `createRunVersion`     | Comma separated list of branch,tag, or pr that indicates in which cases a unique run version should be created using `github.run_number` and `github.run_attempt` | 
+| `versionFileSeparator` | Separator used when concatenating the ref and version file versions                                                                                               | 
+| `from-tag`             | A tag name that will set the output version using the same logic as if it would have been a ref tag                                                               | 
+| `tagPrefix`            | A prefix that will be removed from the beginning of the tag name to compute the version name                                                                      | 
 
 
 ## Outputs

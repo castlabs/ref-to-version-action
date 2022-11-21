@@ -9629,8 +9629,11 @@ try {
 
   let version = segments[2]
 
-  if (isTag && version.startsWith("v")) {
-    version = version.substring(1)
+  if (isTag) {
+    let tagPrefix = core.getInput("tagPrefix")
+    if (tagPrefix && version.startsWith(tagPrefix)) {
+      version = version.substring(tagPrefix.length)
+    }
   }
 
   if (isPullRequest) {
