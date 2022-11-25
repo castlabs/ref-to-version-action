@@ -16,6 +16,13 @@ try {
   const isBranch = !isTag && !isPullRequest
 
   let version = segments[2]
+  // version tags and branches might also contain / so we need 
+  // to join the rest of the segments
+  if (segments.length > 3) {
+    for (let i=3; i< segments.length; i++) {
+      version += `/${segments[i]}`
+    } 
+  }
 
   if (isTag) {
     let tagPrefix = core.getInput("tagPrefix")
