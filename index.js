@@ -18,7 +18,7 @@ try {
   let version = segments[2]
   // version tags and branches might also contain / so we need 
   // to join the rest of the segments
-  if (segments.length > 3) {
+  if (segments.length > 3 && !isPullRequest) {
     for (let i=3; i< segments.length; i++) {
       version += `/${segments[i]}`
     } 
