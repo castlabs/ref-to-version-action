@@ -9619,6 +9619,8 @@ try {
   let fromTag = core.getInput("from-tag")
   if (fromTag) {
     ref = `refs/tags/${fromTag}`
+  } else if (github.context.eventName === 'pull_request') {
+    ref = "refs/pull/" + github.context.event.number
   }
   core.info(`Extracting version from ${ref}`)
 
@@ -9628,12 +9630,12 @@ try {
   const isBranch = !isTag && !isPullRequest
 
   let version = segments[2]
-  // version tags and branches might also contain / so we need 
+  // version tags and branches might also contain / so we need
   // to join the rest of the segments
   if (segments.length > 3 && !isPullRequest) {
     for (let i=3; i< segments.length; i++) {
       version += `/${segments[i]}`
-    } 
+    }
   }
 
   if (isTag) {
