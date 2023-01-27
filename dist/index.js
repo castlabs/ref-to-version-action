@@ -9613,14 +9613,34 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(2186);
 const github = __nccwpck_require__(5438);
 const fs = __nccwpck_require__(7147);
-
 try {
   let ref = github.context.ref
   let fromTag = core.getInput("from-tag")
   if (fromTag) {
     ref = `refs/tags/${fromTag}`
-  } else if (github.context.eventName === 'pull_request') {
-    ref = "refs/pull/" + github.context.event.number
+  }
+
+  // There are cases, especially when triggering actions on a closed
+  // event on a pull request, but there might be others, where the
+  // ref just points to a branch name.
+  // Since we rely on the fact that we find a refs/... there,
+  // we handle the case here and make sure that we are logging the
+  // context for debugging other cases.
+  // The cases we know, i.e. pull_request even types, are handled here
+  // directly.
+  if (!ref.startsWith("refs/")) {
+    core.info(
+      `GitHub ref does not start with refs/ but is '${ref}'. ` +
+      `The event is: '${github.context.eventName}'`)
+
+    if (github.context.eventName === 'pull_request') {
+      ref = "refs/pull/" + github.context.payload.number
+    } else {
+      core.warning("github.ref does not start with 'refs/': " + ref)
+      core.warning("The context we found is: " +
+        JSON.stringify(github.context, null, 2))
+    }
+
   }
   core.info(`Extracting version from ${ref}`)
 
