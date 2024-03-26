@@ -48,5 +48,5 @@ outputs:
     description: Boolean that indicates that a branch version was created
 
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'
