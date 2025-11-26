@@ -10,25 +10,20 @@ try {
 
   // There are cases, especially when triggering actions on a closed
   // event on a pull request, but there might be others, where the
-  // ref just points to a branch name.
-  // Since we rely on the fact that we find a refs/... there,
-  // we handle the case here and make sure that we are logging the
-  // context for debugging other cases.
-  // The cases we know, i.e. pull_request even types, are handled here
-  // directly.
-  if (!ref.startsWith("refs/")) {
+  // ref just points to a branch name or the base branch.
+  // For pull_request events, we always want to use the PR number
+  // instead of the ref, which points to the base branch on closed events.
+  if (github.context.eventName === 'pull_request') {
+    core.info(
+      `GitHub event is pull_request, using PR number instead of ref '${ref}'`)
+    ref = "refs/pull/" + github.context.payload.number
+  } else if (!ref.startsWith("refs/")) {
     core.info(
       `GitHub ref does not start with refs/ but is '${ref}'. ` +
       `The event is: '${github.context.eventName}'`)
-
-    if (github.context.eventName === 'pull_request') {
-      ref = "refs/pull/" + github.context.payload.number
-    } else {
-      core.warning("github.ref does not start with 'refs/': " + ref)
-      core.warning("The context we found is: " +
-        JSON.stringify(github.context, null, 2))
-    }
-
+    core.warning("github.ref does not start with 'refs/': " + ref)
+    core.warning("The context we found is: " +
+      JSON.stringify(github.context, null, 2))
   }
   core.info(`Extracting version from ${ref}`)
 
