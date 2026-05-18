@@ -1,6 +1,7 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const fs = require('fs');
+import * as core from '@actions/core';
+import * as github from '@actions/github';
+import fs from 'fs';
+
 try {
   let ref = github.context.ref
   let fromTag = core.getInput("from-tag")
@@ -69,8 +70,7 @@ try {
       version = `${versionInFile}${versionFileSeparator}${version}`
       core.info(`Extracted version-file version: '${versionInFile}' and created final version '${version}'`)
     } else {
-      core.setFailed(`Parsed version file ${versionInFile} but could not find a 'version' property`);
-      return
+      throw new Error(`Parsed version file ${versionFile} but could not find a 'version' property`)
     }
   }
 
@@ -93,4 +93,3 @@ try {
 } catch (error) {
   core.setFailed(error)
 }
-
